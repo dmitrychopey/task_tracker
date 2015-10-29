@@ -1,4 +1,11 @@
 TaskTracker::Application.routes.draw do
+  # get "roles/index"
+  # get "roles/show"
+  # get "roles/new"
+  # get "roles/create"
+  # get "roles/edit"
+  # get "roles/update"
+  resources :roles
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
