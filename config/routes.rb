@@ -1,20 +1,22 @@
 TaskTracker::Application.routes.draw do
-  get "users/index"
-  get "users/show"
-  get "users/new"
-  get "users/create"
-  get "users/edit"
-  get "users/update"
+  # get "users/index"
+  # get "users/show"
+  # get "users/new"
+  # get "users/create"
+  # get "users/edit"
+  # get "users/update"
   # get "roles/index"
   # get "roles/show"
   # get "roles/new"
   # get "roles/create"
   # get "roles/edit"
   # get "roles/update"
+
   resources :roles
 
   devise_for :users
-    resources :users
+  resources :users
+   root to: "users#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
