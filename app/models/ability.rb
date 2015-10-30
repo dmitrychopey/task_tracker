@@ -5,9 +5,17 @@ class Ability
 
     if user.has_role? :superadmin
       can :manage, :all
-    else
-      can :read, :all
-    end
+  else
+    can :read, User
+  end
+
+  # if user.has_role? :admin
+  #     can :manage, :all
+  # else
+  #     can :read, Forum
+  #     can :write, Forum if user.has_role?(:moderator, Forum)
+  #     can :write, Forum, :id => Forum.with_role(:moderator, user).pluck(:id)
+  # end
 
 
     # Define abilities for the passed in user here. For example:
@@ -36,5 +44,5 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-  end
+end
 end

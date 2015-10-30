@@ -6,6 +6,13 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+    Role.delete_all
+    User.delete_all
 
-    # Role.create(name: "superadmin")
-    # Role.create(name: "moderator")
+    u = User.new(email:"user@email.com", password:"12345678")
+    u.add_role "superadmin"
+    u.save!
+
+    u2 = User.new(email:"user2@email.com", password:"12345678")
+    u2.add_role "worker"
+    u2.save!
