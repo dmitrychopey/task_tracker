@@ -1,4 +1,6 @@
 TaskTracker::Application.routes.draw do
+  resources :projects
+
   # get "users/index"
   # get "users/show"
   # get "users/new"

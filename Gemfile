@@ -32,6 +32,19 @@ gem 'devise'
 gem 'cancancan'
 gem 'rolify'
 
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+end
+
+group :test do
+  gem 'faker'
+  gem 'capybara'
+  gem 'guard-rspec'
+  gem 'launchy'
+end
+
+
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
