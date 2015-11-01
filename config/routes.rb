@@ -1,18 +1,9 @@
 TaskTracker::Application.routes.draw do
-  resources :projects
+  resources :statuses
 
-  # get "users/index"
-  # get "users/show"
-  # get "users/new"
-  # get "users/create"
-  # get "users/edit"
-  # get "users/update"
-  # get "roles/index"
-  # get "roles/show"
-  # get "roles/new"
-  # get "roles/create"
-  # get "roles/edit"
-  # get "roles/update"
+  resources :tasks
+
+  resources :projects
 
   resources :roles
 
