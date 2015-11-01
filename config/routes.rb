@@ -1,4 +1,5 @@
 TaskTracker::Application.routes.draw do
+  get "static_pages/home"
   resources :statuses
 
   resources :tasks
@@ -9,7 +10,7 @@ TaskTracker::Application.routes.draw do
 
   devise_for :users
   resources :users
-   root to: "users#index"
+   root to: "static_pages#home"
 
     patch 'add_worker/:id', to:'projects#add_worker', as: 'add_worker'
     delete ':id/remove_worker/:user_id', to:'projects#remove_worker', as:'remove_worker'
