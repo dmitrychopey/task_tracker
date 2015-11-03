@@ -2,9 +2,13 @@ TaskTracker::Application.routes.draw do
   get "static_pages/home"
   resources :statuses
 
-  resources :tasks
+  
 
-  resources :projects
+  resources :projects do
+    resources :tasks
+    delete 'task_remove_worker/:id', to:'tasks#remove_worker', as:'task_remove_worker'
+     patch 'task_add_worker/:id', to:'tasks#add_worker', as: 'task_add_worker'
+  end
 
   resources :roles
 
@@ -13,7 +17,16 @@ TaskTracker::Application.routes.draw do
    root to: "static_pages#home"
 
     patch 'add_worker/:id', to:'projects#add_worker', as: 'add_worker'
+    # patch 'task_add_worker/:id', to:'tasks#add_worker', as: 'task_add_worker'
+
     delete ':id/remove_worker/:user_id', to:'projects#remove_worker', as:'remove_worker'
+
+
+    # delete 'task_remove_worker/:task_id', to:'task#remove_worker', as:'task_remove_worker'
+      # delete 'remove_task/:id', to:'user#remove_task', as:'remove_task'
+
+      
+    # delete ':id/remove_task/:task_id', to:'projects#remove_task', as:'remove_task'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
