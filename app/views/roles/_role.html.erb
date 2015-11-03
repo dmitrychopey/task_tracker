@@ -1,0 +1,12 @@
+<div class="role">
+	
+	<tr>
+		<td><%=link_to role.name, role%></td>          
+		<td>
+			<%=link_to "Edit", edit_role_path(role)%> |
+			<%=link_to "Delete", role, method: :delete, data: {confirm: "Are you sure?"}%>
+		</td>
+	</tr>
+	
+
+</div>

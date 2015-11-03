@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @project.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @project.description %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @project.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @project.end_date %>
+</p>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>
+
+
+<h3>Project workers </h3>
+
+<table class="rwd-table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Role</th>    
+      <th></th>   
+    </tr>
+  </thead>
+    <tbody>
+    <% @project.users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.roles.first.name %></td>     
+        <td><%= link_to 'Remove', remove_worker_path(@project, user), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_for(@project, url: add_worker_path) do |f| %> 
+
+    <%= f.collection_select(:user_ids, @all_users, :id, :email)%>
+  <%= f.submit "Add worker" %>
+<% end %>
+
+<h3>Project Tasks </h3>
+
+<table class="rwd-table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>    
+      <th>Duration</th>   
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+    <tbody>
+    <% @project.tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.description %></td>     
+         <td><%= task.duration %></td>   
+         <td><%= link_to 'Show', project_task_path(@project,task) %></td>
+        <td><%= link_to 'Remove', project_task_path(@project,task), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Add task", new_project_task_path(@project)%>

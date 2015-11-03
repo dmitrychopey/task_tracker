@@ -1,0 +1,15 @@
+<h1>Roles</h1>
+<p>Here you can see all user roles</p>
+<table class="all-posts">
+	<thead>
+		<tr>
+			<th class="posts-header">Role title</th>
+
+			<th>Operation</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%= render @roles%>
+	</tbody>
+</table>
+<%=link_to "Add new role", new_role_path, class:"button"%>
