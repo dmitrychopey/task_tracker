@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :task do
-    title "MyString"
-description "MyText"
-duration 1
-status_id 1
+    title {Faker::App.name}
+description {Faker::App.name}
+duration {Faker::Number.number(2)}
+status_id {Faker::Number.number(2)}
   end
 
 end

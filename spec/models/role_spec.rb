@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Project, type: :model do
+RSpec.describe Role, type: :model do
 	
 	it "has a valid factory" do
 		expect(FactoryGirl.create(:project)).to be_valid
@@ -17,6 +17,5 @@ RSpec.describe Project, type: :model do
 	it "is invalid without a end date" do
 		expect(FactoryGirl.build(:project, end_date: nil)).not_to be_valid
 	end
-	
 	
 end
