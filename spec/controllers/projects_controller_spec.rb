@@ -20,15 +20,21 @@ require 'rails_helper'
 
 RSpec.describe ProjectsController, type: :controller do
 
+   before(:each) do   
+      user = FactoryGirl.create(:user)
+      user.add_role "superadmin"
+      sign_in user        
+  end
+
   # This should return the minimal set of attributes required to create a valid
   # Project. As you add validations to Project, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    FactoryGirl.attributes_for(:project)
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+     FactoryGirl.attributes_for(:project, name: nil)
   }
 
   # This should return the minimal set of values that should be in the session
@@ -38,15 +44,15 @@ RSpec.describe ProjectsController, type: :controller do
 
   describe "GET #index" do
     it "assigns all projects as @projects" do
-      project = Project.create! valid_attributes
-      get :index, {}, valid_session
+      project = FactoryGirl.create(:project)
+      get :index
       expect(assigns(:projects)).to eq([project])
     end
   end
 
   describe "GET #show" do
     it "assigns the requested project as @project" do
-      project = Project.create! valid_attributes
+      project = FactoryGirl.create(:project)
       get :show, {:id => project.to_param}, valid_session
       expect(assigns(:project)).to eq(project)
     end
@@ -61,7 +67,7 @@ RSpec.describe ProjectsController, type: :controller do
 
   describe "GET #edit" do
     it "assigns the requested project as @project" do
-      project = Project.create! valid_attributes
+       project = FactoryGirl.create(:project)
       get :edit, {:id => project.to_param}, valid_session
       expect(assigns(:project)).to eq(project)
     end
@@ -101,26 +107,28 @@ RSpec.describe ProjectsController, type: :controller do
   end
 
   describe "PUT #update" do
+     render_views
     context "with valid params" do
+
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+         FactoryGirl.attributes_for(:project, name: Faker::App.name )
       }
 
       it "updates the requested project" do
-        project = Project.create! valid_attributes
+        project = FactoryGirl.create(:project)
         put :update, {:id => project.to_param, :project => new_attributes}, valid_session
         project.reload
-        skip("Add assertions for updated state")
+       
       end
 
       it "assigns the requested project as @project" do
-        project = Project.create! valid_attributes
+       project = FactoryGirl.create(:project)
         put :update, {:id => project.to_param, :project => valid_attributes}, valid_session
         expect(assigns(:project)).to eq(project)
       end
 
       it "redirects to the project" do
-        project = Project.create! valid_attributes
+       project = FactoryGirl.create(:project)
         put :update, {:id => project.to_param, :project => valid_attributes}, valid_session
         expect(response).to redirect_to(project)
       end
@@ -128,13 +136,13 @@ RSpec.describe ProjectsController, type: :controller do
 
     context "with invalid params" do
       it "assigns the project as @project" do
-        project = Project.create! valid_attributes
+        project = FactoryGirl.create(:project)
         put :update, {:id => project.to_param, :project => invalid_attributes}, valid_session
         expect(assigns(:project)).to eq(project)
       end
 
       it "re-renders the 'edit' template" do
-        project = Project.create! valid_attributes
+        project = FactoryGirl.create(:project)
         put :update, {:id => project.to_param, :project => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
