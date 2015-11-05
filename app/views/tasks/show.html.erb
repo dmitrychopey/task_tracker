@@ -18,7 +18,10 @@
 
 <p>
   <strong>Status:</strong>
+  <% if @task.status %>
   <%= @task.status.title %>
+
+  <%end%>
 </p>
 
 <h3>Task workers </h3>

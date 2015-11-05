@@ -18,6 +18,10 @@
     u2.add_role "worker"
     u2.save!
 
+       u2 = User.new(email:"user3@email.com", password:"12345678")
+    u2.add_role "manager"
+    u2.save!
+
 	Status.create(title:"New")
 	Status.create(title:"In Progress")
 	Status.create(title:"Resolved")

@@ -8,7 +8,8 @@ class Ability
    else
 
         if user.has_role? :manager
-        can :manage, Project
+        can :read, :all
+        can :manage, Task
       end
          
 
