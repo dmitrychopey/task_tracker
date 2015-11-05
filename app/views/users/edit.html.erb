@@ -1,2 +1,19 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<h1>Editing user</h1>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Role:</strong>
+  <%= form_for(@user) do |f| %> 
+
+    <%= f.collection_select(:role_ids, Role.all, :id, :name)%>
+  <%= f.submit "Change Role" %>
+  <%end%>
+</p>
+
+
+<%= link_to 'Show', @user %> |
+<%= link_to 'Back', users_path %>

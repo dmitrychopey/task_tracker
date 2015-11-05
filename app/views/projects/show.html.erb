@@ -45,11 +45,24 @@
   </tbody>
 </table>
 
+<% if current_user.has_role? :superadmin %>
+
 <%= form_for(@project, url: add_worker_path) do |f| %> 
 
     <%= f.collection_select(:user_ids, @all_users, :id, :email)%>
   <%= f.submit "Add worker" %>
+
+
 <% end %>
+
+  <% else %>
+  <div class="no-rights">
+<%= " You have no rights to add workers to the project" %>
+ </div>
+<% end %>
+
+
+
 
 <h3>Project Tasks </h3>
 
@@ -59,6 +72,7 @@
       <th>Title</th>
       <th>Description</th>    
       <th>Duration</th>   
+        <th>Status</th>
       <th></th>
       <th></th>
     </tr>
@@ -69,6 +83,7 @@
         <td><%= task.title %></td>
         <td><%= task.description %></td>     
          <td><%= task.duration %></td>   
+          <td><%= task.status.title %></td>  
          <td><%= link_to 'Show', project_task_path(@project,task) %></td>
         <td><%= link_to 'Remove', project_task_path(@project,task), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -76,4 +91,15 @@
   </tbody>
 </table>
 
+<% if current_user.has_role? :superadmin or current_user.has_role? :manager %>
+
 <%= link_to "Add task", new_project_task_path(@project)%>
+
+  <% else %>
+  <div class="no-rights">
+<%= " You have no rights to add tasks to the project" %>
+ </div>
+<% end %>
+
+
+

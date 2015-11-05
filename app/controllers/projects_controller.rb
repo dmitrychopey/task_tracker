@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_project, only: [:show, :edit, :update, :add_worker,:remove_worker, :destroy]
 
   respond_to :html
@@ -34,6 +36,10 @@ class ProjectsController < ApplicationController
   def remove_worker
     @user = User.find(params[:user_id])
      @project.users.delete(@user)
+     @project.tasks.each do |task|
+      @user.tasks.delete(task)
+    end
+
      redirect_to :back
   end
 

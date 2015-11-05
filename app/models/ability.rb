@@ -6,8 +6,19 @@ class Ability
     if user.has_role? :superadmin
        can :manage, :all
    else
+
+        if user.has_role? :manager
+        can :manage, Project
+      end
+         
+
+
+
+
     if user.has_role? :worker
         can :read, User
+        can :read, Project
+        can :read, Task       
     end
 
 

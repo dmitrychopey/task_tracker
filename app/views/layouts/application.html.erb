@@ -44,13 +44,22 @@
 
   <div class="header-container">
     <header class="wrapper clearfix">
-      <div class="title"><%=image_tag("task_logo.png", size: "75x75", alt: "Logo")%></div>
+      <div class="title">
+        <%=link_to static_pages_home_path do%>
+        <%=image_tag("task_logo.png", size: "75x75", alt: "Logo")%>
+
+  <%end%>
+      </div>
+
+      
 
       <nav>
         <ul>
-          <li><%=link_to "Home", static_pages_home_path %></li>
+           <li><%=link_to "Users", users_path %></li>        
           <li><%=link_to "Projects", projects_path %></li>
-          <li><a href="#">About</a></li>
+          <li><%=link_to "Roles", roles_path %></li>
+         
+       
         </ul>
       </nav>
     </header>

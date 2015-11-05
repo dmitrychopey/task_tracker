@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_task, :set_project, only: [:show, :edit, :update, :add_worker, :remove_worker, :destroy]
-
+  
   respond_to :html
 
   def index
@@ -15,7 +17,7 @@ class TasksController < ApplicationController
   def new
     @project = Project.find(params[:project_id])
     @task = Task.new
-    @project.tasks << @task
+   
     respond_with(@task)
   end
 
@@ -41,8 +43,10 @@ class TasksController < ApplicationController
   end
 
   def create
+    @project = Project.find(params[:project_id])
     @task = Task.new(task_params)
-    @task.save
+    @project.tasks << @task
+    # @task.save
     redirect_to project_path(@task.project)
   end
 

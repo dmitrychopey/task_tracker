@@ -24,10 +24,12 @@
     <%= f.number_field :duration %>
   </div>
   <div class="field">
-    <%= f.label :status_id %><br>
-    <%= f.number_field :status_id %>
+       <%= f.label :status_id %><br>
+       <%= f.collection_select(:status_id, Status.all, :id, :title)%>
+ 
+ 
   </div>
   <div class="actions">
-    <%= f.submit "Add task" %>
+    <%= f.submit "Add/Edit task" %>
   </div>
 <% end %>

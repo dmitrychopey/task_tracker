@@ -176,6 +176,10 @@ a {
    list-style-type: none;
 }
 
+.no-rights{
+  
+  color:red;
+}
 
 
 $breakpoint-alpha: 480px; // adjust to your needs
@@ -329,7 +333,7 @@ $breakpoint-alpha: 480px; // adjust to your needs
 
     nav {
         float: right;
-        width: 38%;
+        width: 50%;
     }
 
 /* ============

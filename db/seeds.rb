@@ -8,6 +8,7 @@
 
     Role.delete_all
     User.delete_all
+    Status.delete_all
 
     u = User.new(email:"user@email.com", password:"12345678")
     u.add_role "superadmin"
@@ -16,3 +17,9 @@
     u2 = User.new(email:"user2@email.com", password:"12345678")
     u2.add_role "worker"
     u2.save!
+
+	Status.create(title:"New")
+	Status.create(title:"In Progress")
+	Status.create(title:"Resolved")
+	Status.create(title:"Closed")
+
