@@ -19,16 +19,20 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe StatusesController, type: :controller do
-
+  before(:each) do   
+      user = FactoryGirl.create(:user)
+      user.add_role "superadmin"
+      sign_in user        
+  end
   # This should return the minimal set of attributes required to create a valid
   # Status. As you add validations to Status, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    FactoryGirl.attributes_for(:status)
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    FactoryGirl.attributes_for(:status, title: nil)
   }
 
   # This should return the minimal set of values that should be in the session
@@ -38,7 +42,7 @@ RSpec.describe StatusesController, type: :controller do
 
   describe "GET #index" do
     it "assigns all statuses as @statuses" do
-      status = Status.create! valid_attributes
+      status = FactoryGirl.create(:status)
       get :index, {}, valid_session
       expect(assigns(:statuses)).to eq([status])
     end
@@ -46,7 +50,7 @@ RSpec.describe StatusesController, type: :controller do
 
   describe "GET #show" do
     it "assigns the requested status as @status" do
-      status = Status.create! valid_attributes
+     status = FactoryGirl.create(:status)
       get :show, {:id => status.to_param}, valid_session
       expect(assigns(:status)).to eq(status)
     end
@@ -61,7 +65,7 @@ RSpec.describe StatusesController, type: :controller do
 
   describe "GET #edit" do
     it "assigns the requested status as @status" do
-      status = Status.create! valid_attributes
+    status = FactoryGirl.create(:status)
       get :edit, {:id => status.to_param}, valid_session
       expect(assigns(:status)).to eq(status)
     end
@@ -103,24 +107,23 @@ RSpec.describe StatusesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+       FactoryGirl.attributes_for(:status, title: Faker::Lorem.word)
       }
-
       it "updates the requested status" do
-        status = Status.create! valid_attributes
+       status = FactoryGirl.create(:status)
         put :update, {:id => status.to_param, :status => new_attributes}, valid_session
         status.reload
-        skip("Add assertions for updated state")
+        
       end
 
       it "assigns the requested status as @status" do
-        status = Status.create! valid_attributes
+       status = FactoryGirl.create(:status)
         put :update, {:id => status.to_param, :status => valid_attributes}, valid_session
         expect(assigns(:status)).to eq(status)
       end
 
       it "redirects to the status" do
-        status = Status.create! valid_attributes
+       status = FactoryGirl.create(:status)
         put :update, {:id => status.to_param, :status => valid_attributes}, valid_session
         expect(response).to redirect_to(status)
       end
@@ -128,13 +131,13 @@ RSpec.describe StatusesController, type: :controller do
 
     context "with invalid params" do
       it "assigns the status as @status" do
-        status = Status.create! valid_attributes
+        status = FactoryGirl.create(:status)
         put :update, {:id => status.to_param, :status => invalid_attributes}, valid_session
         expect(assigns(:status)).to eq(status)
       end
 
       it "re-renders the 'edit' template" do
-        status = Status.create! valid_attributes
+       status = FactoryGirl.create(:status)
         put :update, {:id => status.to_param, :status => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
@@ -143,14 +146,14 @@ RSpec.describe StatusesController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested status" do
-      status = Status.create! valid_attributes
+      status = FactoryGirl.create(:status)
       expect {
         delete :destroy, {:id => status.to_param}, valid_session
       }.to change(Status, :count).by(-1)
     end
 
     it "redirects to the statuses list" do
-      status = Status.create! valid_attributes
+     status = FactoryGirl.create(:status)
       delete :destroy, {:id => status.to_param}, valid_session
       expect(response).to redirect_to(statuses_url)
     end

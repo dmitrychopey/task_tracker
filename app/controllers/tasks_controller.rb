@@ -45,19 +45,21 @@ class TasksController < ApplicationController
   def create
     @project = Project.find(params[:project_id])
     @task = Task.new(task_params)
+    @task.save
     @project.tasks << @task
-    # @task.save
-    redirect_to project_path(@task.project)
+    respond_with(@project,@task)
   end
 
   def update
     @task.update(task_params)
-   redirect_to project_path(@task.project)
+   respond_with(@project,@task)
   end
 
   def destroy
     @task.destroy
-     redirect_to :back
+     redirect_to @project
+  #    rescue ActionController::RedirectBackError
+  # redirect_to @project
   end
 
   private

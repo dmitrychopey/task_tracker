@@ -23,12 +23,21 @@ RSpec.describe TasksController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Task. As you add validations to Task, be sure to
   # adjust the attributes here as well.
+
+   before(:each) do   
+      user = FactoryGirl.create(:user)
+      user.add_role "superadmin"
+      sign_in user        
+
+    
+  end
+
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    FactoryGirl.attributes_for(:task)
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    FactoryGirl.attributes_for(:task, title: nil)
   }
 
   # This should return the minimal set of values that should be in the session
@@ -38,31 +47,34 @@ RSpec.describe TasksController, type: :controller do
 
   describe "GET #index" do
     it "assigns all tasks as @tasks" do
-      task = Task.create! valid_attributes
-      get :index, {}, valid_session
+     task = FactoryGirl.create(:task)
+      get :index, {project_id: 1}, valid_session
       expect(assigns(:tasks)).to eq([task])
     end
   end
 
   describe "GET #show" do
     it "assigns the requested task as @task" do
-      task = Task.create! valid_attributes
-      get :show, {:id => task.to_param}, valid_session
+      task = FactoryGirl.create(:task)
+      project = FactoryGirl.create(:project)
+      get :show, {:project_id => project.to_param, :id => task.to_param}, valid_session
       expect(assigns(:task)).to eq(task)
     end
   end
 
   describe "GET #new" do
     it "assigns a new task as @task" do
-      get :new, {}, valid_session
+       project = FactoryGirl.create(:project)
+      get :new, {:project_id => project.to_param}, valid_session
       expect(assigns(:task)).to be_a_new(Task)
     end
   end
 
   describe "GET #edit" do
     it "assigns the requested task as @task" do
-      task = Task.create! valid_attributes
-      get :edit, {:id => task.to_param}, valid_session
+      task = FactoryGirl.create(:task)
+        project = FactoryGirl.create(:project)
+      get :edit, {:project_id => project.to_param, :id => task.to_param}, valid_session
       expect(assigns(:task)).to eq(task)
     end
   end
@@ -70,31 +82,37 @@ RSpec.describe TasksController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Task" do
+          project = FactoryGirl.create(:project)
         expect {
-          post :create, {:task => valid_attributes}, valid_session
+          post :create, {:project_id => project.to_param, :task => valid_attributes}, valid_session
         }.to change(Task, :count).by(1)
       end
 
       it "assigns a newly created task as @task" do
-        post :create, {:task => valid_attributes}, valid_session
+         project = FactoryGirl.create(:project)
+        post :create, {:project_id => project.to_param, :task => valid_attributes}, valid_session
         expect(assigns(:task)).to be_a(Task)
         expect(assigns(:task)).to be_persisted
       end
 
       it "redirects to the created task" do
-        post :create, {:task => valid_attributes}, valid_session
-        expect(response).to redirect_to(Task.last)
+         project = FactoryGirl.create(:project)
+        post :create, {:project_id => project.to_param, :task => valid_attributes}, valid_session
+        expect(response).to redirect_to(project_task_path(project,Task.last))
       end
     end
 
     context "with invalid params" do
+      render_views
       it "assigns a newly created but unsaved task as @task" do
-        post :create, {:task => invalid_attributes}, valid_session
+         project = FactoryGirl.create(:project)
+        post :create, {:project_id => project.to_param, :task => invalid_attributes}, valid_session
         expect(assigns(:task)).to be_a_new(Task)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:task => invalid_attributes}, valid_session
+         project = FactoryGirl.create(:project)
+        post :create, {:project_id => project.to_param, :task => invalid_attributes}, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -102,40 +120,45 @@ RSpec.describe TasksController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
+
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+       FactoryGirl.attributes_for(:task, title: Faker::App.name)
       }
 
       it "updates the requested task" do
-        task = Task.create! valid_attributes
-        put :update, {:id => task.to_param, :task => new_attributes}, valid_session
-        task.reload
-        skip("Add assertions for updated state")
+          project = FactoryGirl.create(:project)
+       task = FactoryGirl.create(:task)
+        put :update, {:project_id => project.to_param, :id => task.to_param, :task => new_attributes}, valid_session
+        task.reload       
       end
 
       it "assigns the requested task as @task" do
-        task = Task.create! valid_attributes
-        put :update, {:id => task.to_param, :task => valid_attributes}, valid_session
+          project = FactoryGirl.create(:project)
+       task = FactoryGirl.create(:task)
+        put :update, {:project_id => project.to_param, :id => task.to_param, :task => valid_attributes}, valid_session
         expect(assigns(:task)).to eq(task)
       end
 
       it "redirects to the task" do
-        task = Task.create! valid_attributes
-        put :update, {:id => task.to_param, :task => valid_attributes}, valid_session
-        expect(response).to redirect_to(task)
+          project = FactoryGirl.create(:project)
+       task = FactoryGirl.create(:task)
+        put :update, {:project_id => project.to_param, :id => task.to_param, :task => valid_attributes}, valid_session
+        expect(response).to redirect_to(project_task_path(project,Task.last))
       end
     end
 
     context "with invalid params" do
       it "assigns the task as @task" do
-        task = Task.create! valid_attributes
-        put :update, {:id => task.to_param, :task => invalid_attributes}, valid_session
+          project = FactoryGirl.create(:project)
+        task = FactoryGirl.create(:task)
+        put :update, {:project_id => project.to_param, :id => task.to_param, :task => invalid_attributes}, valid_session
         expect(assigns(:task)).to eq(task)
       end
 
       it "re-renders the 'edit' template" do
-        task = Task.create! valid_attributes
-        put :update, {:id => task.to_param, :task => invalid_attributes}, valid_session
+          project = FactoryGirl.create(:project)
+        task = FactoryGirl.create(:task)
+        put :update, {:project_id => project.to_param, :id => task.to_param, :task => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -143,16 +166,18 @@ RSpec.describe TasksController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested task" do
-      task = Task.create! valid_attributes
+        project = FactoryGirl.create(:project)
+      task = FactoryGirl.create(:task)
       expect {
-        delete :destroy, {:id => task.to_param}, valid_session
+        delete :destroy, {:project_id => project.to_param,:id => task.to_param}, valid_session
       }.to change(Task, :count).by(-1)
     end
 
-    it "redirects to the tasks list" do
-      task = Task.create! valid_attributes
-      delete :destroy, {:id => task.to_param}, valid_session
-      expect(response).to redirect_to(tasks_url)
+    it "redirects to the project tasks list" do
+        project = FactoryGirl.create(:project)
+     task = FactoryGirl.create(:task)
+      delete :destroy, {:project_id => project.to_param, :id => task.to_param}, valid_session
+      expect(response).to redirect_to(project_path(project))
     end
   end
 
