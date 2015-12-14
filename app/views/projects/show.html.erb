@@ -26,7 +26,7 @@
 
 <h3>Project workers </h3>
 
-<table class="rwd-table">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Email</th>
@@ -66,7 +66,7 @@
 
 <h3>Project Tasks </h3>
 
-<table class="rwd-table">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Title</th>
@@ -97,7 +97,7 @@
 
 <% if current_user.has_role? :superadmin or current_user.has_role? :manager %>
 
-<%= link_to "Add task", new_project_task_path(@project)%>
+<%= link_to "Add task", new_project_task_path(@project), class:"btn btn-primary" %>
 
   <% else %>
   <div class="no-rights">

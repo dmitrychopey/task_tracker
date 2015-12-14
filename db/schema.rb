@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20151103131124) do
 
-  create_table "projects", force: true do |t|
+  create_table "projects", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
     t.date     "start_date"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20151103131124) do
     t.datetime "updated_at"
   end
 
-  create_table "projects_users", id: false, force: true do |t|
+  create_table "projects_users", id: false, force: :cascade do |t|
     t.integer "project_id", null: false
     t.integer "user_id",    null: false
   end
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20151103131124) do
   add_index "projects_users", ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id"
   add_index "projects_users", ["user_id", "project_id"], name: "index_projects_users_on_user_id_and_project_id"
 
-  create_table "roles", force: true do |t|
+  create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.integer  "resource_id"
     t.string   "resource_type"
@@ -41,13 +41,13 @@ ActiveRecord::Schema.define(version: 20151103131124) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], name: "index_roles_on_name"
 
-  create_table "statuses", force: true do |t|
+  create_table "statuses", force: :cascade do |t|
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tasks", force: true do |t|
+  create_table "tasks", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.integer  "duration"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20151103131124) do
     t.integer  "user_id"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 20151103131124) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
-  create_table "users_roles", id: false, force: true do |t|
+  create_table "users_roles", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
   end

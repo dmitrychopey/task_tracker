@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.13'
+gem 'rails',                '4.2.2'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
@@ -28,7 +28,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
 #Front-end
-gem "rails-boilerplate"
+gem 'bootstrap-sass',       '3.2.0.0'
 # Authorization
 gem 'devise'
 gem 'cancancan'
