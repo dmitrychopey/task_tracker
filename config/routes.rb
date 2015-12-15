@@ -1,5 +1,9 @@
 TaskTracker::Application.routes.draw do
   get "static_pages/home"
+  get "statistics/index", as: "statistics"
+  get "statistics/by_tasks/:id", to:'statistics#by_tasks', as: "by_tasks"
+
+  get "statistics/project_stat", as: "project_stat"
   resources :statuses
 
   

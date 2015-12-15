@@ -1,0 +1,43 @@
+
+<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+
+<h1>Statistics by projects</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Start date</th>
+      <th>End date</th>  
+      <th>Spent time</th> 
+      <th>By tasks</th> 
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.name %></td>
+        <td><%= project.description %></td>
+        <td><%= project.start_date %></td>
+        <td><%= project.end_date %></td>       
+        <td><%= (@today-project.start_date).to_i %></td>   
+        <td><%=link_to "By #{project.name}'s' tasks", by_tasks_path(project) %></td>    
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= pie_chart(@projects_h) %>
+
+
+<h1>Statistics by all tasks</h1>
+<br>
+
+ <%worker_tasks=Task.only_workers.without_weekends.average_time%>
+ <%= column_chart(worker_tasks) %>
+
+

@@ -42,7 +42,7 @@
           <li><%=link_to "Roles", roles_path %></li>
 
           <% if user_signed_in? and (current_user.has_role? :superadmin) %>
-           <li><%=link_to "Statistics", roles_path %></li>   
+           <li><%=link_to "Statistics", statistics_path %></li>   
            <% end %>
         </ul>
 

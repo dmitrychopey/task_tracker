@@ -1,0 +1,44 @@
+
+<%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+
+<h1>Statistics by projects tasks</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>    
+      <th>Duration</th>   
+      <th>Status</th>
+      <th>Responsible</th>
+     </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+    <tr>
+      <td><%= task.title %></td>
+      <td><%= task.description %></td>     
+      <td><%= task.duration %></td>   
+      <td> <% if task.status %>
+        <%= task.status.title %>
+        <%end%>
+      </td>
+      <th><%= task.user.email %></th>
+  
+
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<br>
+
+ <%worker_tasks=@tasks.only_workers.without_weekends.average_time%>
+ <%= column_chart(worker_tasks) %>
+
+
+<!-- current_user.roles.first.name 
+ -->
+
+<%= link_to 'Back', statistics_path %>
