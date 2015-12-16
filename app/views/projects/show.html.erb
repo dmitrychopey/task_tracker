@@ -72,7 +72,8 @@
       <th>Title</th>
       <th>Description</th>    
       <th>Duration</th>   
-        <th>Status</th>
+      <th>Status</th>
+      <th>Finished at</th>
       <th></th>
       <th></th>
     </tr>
@@ -87,6 +88,7 @@
   <%= task.status.title %>
 
   <%end%>
+        <td><%= task.finished_at %></td>
 </td>  
          <td><%= link_to 'Show', project_task_path(@project,task) %></td>
         <td><%= link_to 'Remove', project_task_path(@project,task), method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -3,29 +3,19 @@ class Ability
 
   def initialize(user)
     user ||= User.new
+
     if user.has_role? :superadmin
-       can :manage, :all
-   else
-
-        if user.has_role? :manager
-        can :read, :all
-        can :manage, Task
-      end
-         
-
-
-
-
-    if user.has_role? :worker
-        can :read, User
-        can :read, Project
-        can :read, Task       
-    end
-
-
-  # else
-  #   can :read, User
- end
+      can :manage, :all
+    elsif user.has_role? :manager
+      can :read, :all
+      can :manage, Task
+    elsif user.has_role? :worker
+      can :read, User
+      can :read, Project
+      can :read, Task       
+    end     
+  end
+end
 
   # if user.has_role? :admin
   #     can :manage, :all
@@ -62,5 +52,4 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-end
-end
+    

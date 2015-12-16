@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
   rolify
-  before_save { self.email = email.downcase }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, length: {maximum: 50}, format: {with: VALID_EMAIL_REGEX}
   #validates :password, presence: true
@@ -11,4 +10,7 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :projects
   has_many :tasks
+
+  before_save { self.email = email.downcase }
+
 end

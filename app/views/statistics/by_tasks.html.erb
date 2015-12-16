@@ -10,6 +10,7 @@
       <th>Description</th>    
       <th>Duration</th>   
       <th>Status</th>
+      <th>Finished at</th>
       <th>Responsible</th>
      </tr>
   </thead>
@@ -19,11 +20,12 @@
       <td><%= task.title %></td>
       <td><%= task.description %></td>     
       <td><%= task.duration %></td>   
-      <td> <% if task.status %>
+      <td><% if task.status %>
         <%= task.status.title %>
         <%end%>
+      <td><%= task.finished_at %></td>
       </td>
-      <th><%= task.user.email %></th>
+      <th><%= task.user.email if task.user%></th>
   
 
     </tr>

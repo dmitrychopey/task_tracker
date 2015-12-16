@@ -1,5 +1,6 @@
 TaskTracker::Application.routes.draw do
   get "static_pages/home"
+  get "static_pages/access_denied", as: "access_denied"
   get "statistics/index", as: "statistics"
   get "statistics/by_tasks/:id", to:'statistics#by_tasks', as: "by_tasks"
 
