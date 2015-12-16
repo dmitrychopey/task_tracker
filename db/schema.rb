@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151216085523) do
+ActiveRecord::Schema.define(version: 20151216142523) do
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"
@@ -22,13 +22,14 @@ ActiveRecord::Schema.define(version: 20151216085523) do
     t.datetime "updated_at"
   end
 
+  add_index "projects", ["name", "description"], name: "index_projects_on_name_and_description"
+
   create_table "projects_users", id: false, force: :cascade do |t|
     t.integer "project_id", null: false
     t.integer "user_id",    null: false
   end
 
-  add_index "projects_users", ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id"
-  add_index "projects_users", ["user_id", "project_id"], name: "index_projects_users_on_user_id_and_project_id"
+  add_index "projects_users", ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id", unique: true
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
@@ -38,8 +39,7 @@ ActiveRecord::Schema.define(version: 20151216085523) do
     t.datetime "updated_at"
   end
 
-  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
-  add_index "roles", ["name"], name: "index_roles_on_name"
+  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", unique: true
 
   create_table "statuses", force: :cascade do |t|
     t.string   "title"
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(version: 20151216085523) do
     t.integer  "user_id"
     t.date     "finished_at"
   end
+
+  add_index "tasks", ["title", "description", "user_id", "project_id"], name: "tasks_title_desc_user_id_project_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -82,6 +84,6 @@ ActiveRecord::Schema.define(version: 20151216085523) do
     t.integer "role_id"
   end
 
-  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", unique: true
 
 end
