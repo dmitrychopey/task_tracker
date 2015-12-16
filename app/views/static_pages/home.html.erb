@@ -1,2 +1,11 @@
 <h1>Welcome to Taks Trakcer!</h1>
 
+<% users = User.only_members %>
+
+
+   <% users.each do |user| %>
+    <tr>
+      <td><%= user.email %></td>
+     
+    </tr>
+    <% end %>
