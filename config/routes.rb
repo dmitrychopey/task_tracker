@@ -1,37 +1,42 @@
 TaskTracker::Application.routes.draw do
+
+  root to: "static_pages#home"
+
+  devise_for :users
+
+  get "members/index", to: "members#index"
+
   get "static_pages/home"
   get "static_pages/access_denied", as: "access_denied"
+
   get "statistics/index", as: "statistics"
-  get "statistics/by_tasks/:id", to:'statistics#by_tasks', as: "by_tasks"
-
+  get "statistics/by_tasks/:id", to: 'statistics#by_tasks', as: "by_tasks"
   get "statistics/project_stat", as: "project_stat"
-  resources :statuses
-
   
+  resources :roles
+  resources :users
+  resources :statuses
 
   resources :projects do
     resources :tasks
-    delete 'task_remove_worker/:id', to:'tasks#remove_worker', as:'task_remove_worker'
-     patch 'task_add_worker/:id', to:'tasks#add_worker', as: 'task_add_worker'
+    delete 'remove_task_member/:id', to: 'members#remove_task_member', as: 'remove_task_member'
+    patch 'add_task_member/:id', to: 'members#add_task_member', as: 'add_task_member'
   end
 
-  resources :roles
+  patch 'add_member/:project_id', to: 'members#add_member', as: 'add_member'  
+  delete ':project_id/remove_member/:user_id', to: 'members#remove_member', as: 'remove_member'  
 
-  devise_for :users
-  resources :users
-   root to: "static_pages#home"
+  
+  
+ 
 
-    patch 'add_worker/:id', to:'projects#add_worker', as: 'add_worker'
-    # patch 'task_add_worker/:id', to:'tasks#add_worker', as: 'task_add_worker'
+  
 
-    delete ':id/remove_worker/:user_id', to:'projects#remove_worker', as:'remove_worker'
+  # delete 'task_remove_worker/:task_id', to:'task#remove_worker', as:'task_remove_worker'
+  # delete 'remove_task/:id', to:'user#remove_task', as:'remove_task'
 
 
-    # delete 'task_remove_worker/:task_id', to:'task#remove_worker', as:'task_remove_worker'
-      # delete 'remove_task/:id', to:'user#remove_task', as:'remove_task'
-
-      
-    # delete ':id/remove_task/:task_id', to:'projects#remove_task', as:'remove_task'
+  # delete ':id/remove_task/:task_id', to:'projects#remove_task', as:'remove_task'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

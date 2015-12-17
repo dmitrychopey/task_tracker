@@ -8,7 +8,11 @@
 
 <p>
   <strong>Role:</strong>
-  <%= @user.roles.first.name %>
+  <% if @user.roles.first %>
+    <%= @user.roles.first.name %>
+   <% else %>
+     <%= "No role defined" %>
+  <% end %>
 </p>
 
 

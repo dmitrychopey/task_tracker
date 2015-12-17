@@ -12,7 +12,7 @@
       <th>Status</th>
       <th>Finished at</th>
       <th>Responsible</th>
-     </tr>
+    </tr>
   </thead>
   <tbody>
     <% @tasks.each do |task| %>
@@ -23,10 +23,10 @@
       <td><% if task.status %>
         <%= task.status.title %>
         <%end%>
-      <td><%= task.finished_at %></td>
+        <td><%= task.finished_at %></td>
       </td>
       <th><%= task.user.email if task.user%></th>
-  
+
 
     </tr>
     <% end %>
@@ -36,11 +36,6 @@
 
 <br>
 
- <%worker_tasks=@tasks.only_workers.without_weekends.average_time%>
- <%= column_chart(worker_tasks) %>
-
-
-<!-- current_user.roles.first.name 
- -->
+<%= column_chart(@members_tasks) %>
 
 <%= link_to 'Back', statistics_path %>

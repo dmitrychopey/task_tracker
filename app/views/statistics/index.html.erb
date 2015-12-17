@@ -30,14 +30,13 @@
 </table>
 
 <br>
-
-<%= pie_chart(@projects_h) %>
+<%= pie_chart(@projects_chart) %>
 
 
 <h1>Statistics by all tasks</h1>
 <br>
 
- <%worker_tasks=(Task.without_weekends.joins(:user).merge User.only_members).average_time%>
- <%= column_chart(worker_tasks) %>
+
+ <%= column_chart(@members_tasks) %>
 
 

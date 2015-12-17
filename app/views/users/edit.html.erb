@@ -7,11 +7,10 @@
 
 <p>
   <strong>Role:</strong>
-  <%= form_for(@user) do |f| %> 
-
-    <%= f.collection_select(:role_ids, Role.all, :id, :name)%>
-  <%= f.submit "Change Role" %>
-  <%end%>
+  <%= form_for(@user) do |f| %>
+      <%= f.collection_select(:role_ids, Role.all, :id, :name) %>
+      <%= f.submit "Change Role" %>
+  <% end %>
 </p>
 
 

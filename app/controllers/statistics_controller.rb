@@ -1,22 +1,27 @@
 class StatisticsController < ApplicationController
-	  before_action :set_project, only: [:by_tasks]
+  before_action :set_project, only: [:by_tasks]
 
-	def index
+  def index
     @projects = Project.all.includes(:users, :tasks)
-    @today = Date.today
-    @projects_h = Project.pluck(:name, :start_date).to_h
-    @projects_h.each{ |key,value| @projects_h[key] = (@today -value).to_i }
 
-    #respond_with(@projects)
+    @today = Date.today
+
+    @projects_chart = Project.pluck(:name, :start_date).to_h
+    @projects_chart.each { |key, value| @projects_chart[key] = (@today -value).to_i }
+
+    @members_tasks=(Task.without_weekends.joins(:user).merge User.only_members).average_time
   end
 
   def by_tasks
-  	@tasks = @project.tasks
+    @tasks = @project.tasks
+    @members_tasks=(@tasks.without_weekends.joins(:user).merge User.only_members).average_time
   end
 
 
-private
-    def set_project
-      @project = Project.find(params[:id])
-    end
+  private
+
+  def set_project
+    @project = Project.find(params[:id])
+  end
+
 end

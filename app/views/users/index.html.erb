@@ -2,31 +2,31 @@
 
 <table class="table table-striped">
   <thead>
-    <tr>
-      <th>Email</th>
-      <th>Role</th>    
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
+  <tr>
+    <th>Email</th>
+    <th>Role</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @users.each do |user| %>
+  <% @users.each do |user| %>
       <tr>
         <td><%= user.email %></td>
         <td>
-        	<%if user.roles.first != nil %>
-        	<%= user.roles.first.name %>
-        	<%else %>
-        	<%= "No role defined"%>
-        	<%end%>
-        </td> 
+          <% if user.roles.first != nil %>
+              <%= user.roles.first.name %>
+          <% else %>
+              <%= "No role defined" %>
+          <% end %>
+        </td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
 

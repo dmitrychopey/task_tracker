@@ -39,11 +39,11 @@ class StatusesController < ApplicationController
   end
 
   private
-    def set_status
-      @status = Status.find(params[:id])
-    end
+  def set_status
+    @status = Status.find(params[:id])
+  end
 
-    def status_params
-      params.require(:status).permit(:title)
-    end
+  def status_params
+    params.require(:status).permit(:title)
+  end
 end

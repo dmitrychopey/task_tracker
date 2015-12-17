@@ -1,6 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-
 <p>
   <strong>Title:</strong>
   <%= @task.title %>
@@ -19,9 +18,9 @@
 <p>
   <strong>Status:</strong>
   <% if @task.status %>
-  <%= @task.status.title %>
+      <%= @task.status.title %>
 
-  <%end%>
+  <% end %>
 </p>
 
 <p>
@@ -33,34 +32,31 @@
 
 <table class="rwd-table">
   <thead>
-    <tr>
-      <th>Email</th>
-      <th>Role</th>    
-      <th></th>   
-    </tr>
+  <tr>
+    <th>Email</th>
+    <th>Role</th>
+    <th></th>
+  </tr>
   </thead>
   <% if @task.user %>
-    <tbody>   
+      <tbody>
       <tr>
         <td><%= @task.user.email %></td>
-        <td><%= @task.user.roles.first.name %></td>     
-        <td><%= link_to 'Remove', project_task_remove_worker_path(@project, @task), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>  
-  </tbody>
+        <td><%= @task.user.roles.first.name %></td>
+        <td><%= link_to 'Remove', project_remove_task_member_path(@project, @task), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+      </tbody>
   <% end %>
 </table>
 
 <% unless @task.user %>
-	
+    <%= form_for(@task, url: project_add_task_member_path) do |f| %>
+        <%= f.collection_select(:user_id, @project.users, :id, :email) %>
+        <%= f.submit "Add worker" %>
+    <% end %>
 
-<%= form_for(@task, url: project_task_add_worker_path) do |f| %> 
-
-    <%= f.collection_select(:user_id, @project.users, :id, :email)%>
-  <%= f.submit "Add worker" %>
 <% end %>
 
-<%end%>
 
-
-<%= link_to 'Edit', edit_project_task_path(@project,@task) %> |
-<%= link_to 'Back',  project_path(@project) %>
+<%= link_to 'Edit', edit_project_task_path(@project, @task) %> |
+<%= link_to 'Back', project_path(@project) %>
