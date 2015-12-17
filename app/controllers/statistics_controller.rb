@@ -7,7 +7,9 @@ class StatisticsController < ApplicationController
     @today = Date.today
 
     @projects_chart = Project.pluck(:name, :start_date).to_h
-    @projects_chart.each { |key, value| @projects_chart[key] = (@today -value).to_i }
+    @projects_chart.each { |key, value|
+      @projects_chart[key] = (@today -value).to_i 
+    }  
 
     @members_tasks=(Task.without_weekends.joins(:user).merge User.only_members).average_time
   end

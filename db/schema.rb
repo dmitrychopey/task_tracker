@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151216142523) do
+ActiveRecord::Schema.define(version: 20151217145744) do
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"
@@ -22,7 +22,8 @@ ActiveRecord::Schema.define(version: 20151216142523) do
     t.datetime "updated_at"
   end
 
-  add_index "projects", ["name", "description"], name: "index_projects_on_name_and_description"
+  add_index "projects", ["description"], name: "index_projects_on_description"
+  add_index "projects", ["name"], name: "index_projects_on_name"
 
   create_table "projects_users", id: false, force: :cascade do |t|
     t.integer "project_id", null: false
@@ -57,9 +58,14 @@ ActiveRecord::Schema.define(version: 20151216142523) do
     t.integer  "project_id"
     t.integer  "user_id"
     t.date     "finished_at"
+    t.date     "started_at"
   end
 
-  add_index "tasks", ["title", "description", "user_id", "project_id"], name: "tasks_title_desc_user_id_project_id"
+  add_index "tasks", ["description"], name: "index_tasks_on_description"
+  add_index "tasks", ["finished_at"], name: "index_tasks_on_finished_at"
+  add_index "tasks", ["project_id"], name: "index_tasks_on_project_id"
+  add_index "tasks", ["started_at"], name: "index_tasks_on_started_at"
+  add_index "tasks", ["title"], name: "index_tasks_on_title"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

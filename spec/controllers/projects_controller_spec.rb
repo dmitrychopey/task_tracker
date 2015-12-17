@@ -20,7 +20,7 @@ require 'rails_helper'
 
 RSpec.describe ProjectsController, type: :controller do
 
-   before(:each) do   
+   before do   
       user = FactoryGirl.create(:user)
       user.add_role "superadmin"
       sign_in user        

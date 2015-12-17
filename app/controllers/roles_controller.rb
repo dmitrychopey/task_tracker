@@ -27,7 +27,7 @@ class RolesController < ApplicationController
   end
 
   def set_role
-    @role=Role.find_by_id(params[:id])
+    @role=Role.find(params[:id])
   end
 
   def role_params
