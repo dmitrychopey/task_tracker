@@ -38,21 +38,21 @@
     <th></th>
   </tr>
   </thead>
-  <% if @task.user %>
+  <% if @task.member %>
       <tbody>
       <tr>
-        <td><%= @task.user.email %></td>
-        <td><%= @task.user.roles.first.name %></td>
-        <td><%= link_to 'Remove', project_remove_task_member_path(@project, @task), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <td><%= @task.member.user.email %></td>
+        <td><%= @task.member.user.roles.first.name %></td>
+        <td><%= link_to 'Remove', project_task_member_path(@project, @task), method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
       </tbody>
   <% end %>
 </table>
 
-<% unless @task.user %>
-    <%= form_for(@task, url: project_add_task_member_path) do |f| %>
-        <%= f.collection_select(:user_id, @project.users, :id, :email) %>
-        <%= f.submit "Add worker" %>
+<% unless @task.member %>
+    <%= form_tag(project_task_members_path(id: @task.id)) do %>
+        <%= collection_select(:user, :user_id, @project.users, :id, :email) %>
+        <%= submit_tag "Add worker" %>
     <% end %>
 
 <% end %>

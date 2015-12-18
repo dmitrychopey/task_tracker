@@ -18,19 +18,18 @@ TaskTracker::Application.routes.draw do
   resources :statuses
 
   resources :projects do
-    resources :tasks
-    delete 'remove_task_member/:id', to: 'members#remove_task_member', as: 'remove_task_member'
-    patch 'add_task_member/:id', to: 'members#add_task_member', as: 'add_task_member'
+    resources :members
+    resources :tasks    
+    resources :task_members   
   end
 
-  patch 'add_member/:project_id', to: 'members#add_member', as: 'add_member'  
-  delete ':project_id/remove_member/:user_id', to: 'members#remove_member', as: 'remove_member'  
+  
 
-  
-  
- 
 
-  
+
+
+  # patch 'add_member/:project_id', to: 'members#add_member', as: 'add_member'  
+  # delete ':project_id/remove_member/:user_id', to: 'members#remove_member', as: 'remove_member'  
 
   # delete 'task_remove_worker/:task_id', to:'task#remove_worker', as:'task_remove_worker'
   # delete 'remove_task/:id', to:'user#remove_task', as:'remove_task'

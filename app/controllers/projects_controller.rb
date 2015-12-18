@@ -12,7 +12,9 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @all_users = User.all
+    @all_users = User.not_members(@project.id) 
+    @all_roles = Role.all
+    @member = Member.new
     respond_with(@project)
   end
 

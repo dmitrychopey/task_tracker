@@ -30,26 +30,30 @@
   <thead>
   <tr>
     <th>Email</th>
-    <th>Role</th>
+    <th>Project role</th>
+    <th>Global role</th>
     <th></th>
   </tr>
   </thead>
   <tbody>
-  <% @project.users.each do |user| %>
+  <% @project.members.each do |member| %>
       <tr>
-        <td><%= user.email %></td>
-        <td><%= user.roles.first.name %></td>
-        <td><%= link_to 'Remove', remove_member_path(@project, user), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <td><%= member.user.email %></td>
+        <td><%= member.role.name%></td>
+        <td><%= member.user.roles.first.name %></td>
+        <td><%= link_to 'Remove', [@project, member], method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
   <% end %>
   </tbody>
 </table>
 
+
 <% if current_user.has_role? :superadmin %>
 
-    <%= form_for(@project, url: add_member_path(project_id: @project)) do |f| %>
-
-        <%= f.collection_select(:user_ids, @all_users, :id, :email) %>
+    <%= form_for([@project, @member]) do |f| %>
+        <%= f.hidden_field :project_id, value: @project.id %>
+        <%= f.collection_select(:user_id, @all_users, :id, :email) %>
+        <%= f.collection_select(:role_id, @all_roles, :id, :name) %>
         <%= f.submit "Add worker" %>
 <% end %>
 

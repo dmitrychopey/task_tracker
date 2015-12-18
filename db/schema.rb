@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151217145744) do
+ActiveRecord::Schema.define(version: 20151218115539) do
+
+  create_table "members", force: :cascade do |t|
+    t.integer  "project_id", null: false
+    t.integer  "user_id",    null: false
+    t.integer  "role_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "members", ["project_id", "user_id"], name: "index_members_on_project_id_and_user_id", unique: true
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"
@@ -24,13 +34,6 @@ ActiveRecord::Schema.define(version: 20151217145744) do
 
   add_index "projects", ["description"], name: "index_projects_on_description"
   add_index "projects", ["name"], name: "index_projects_on_name"
-
-  create_table "projects_users", id: false, force: :cascade do |t|
-    t.integer "project_id", null: false
-    t.integer "user_id",    null: false
-  end
-
-  add_index "projects_users", ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id", unique: true
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
@@ -56,9 +59,9 @@ ActiveRecord::Schema.define(version: 20151217145744) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_id"
-    t.integer  "user_id"
     t.date     "finished_at"
     t.date     "started_at"
+    t.integer  "member_id"
   end
 
   add_index "tasks", ["description"], name: "index_tasks_on_description"

@@ -1,49 +1,37 @@
 class MembersController < ApplicationController
+  
   before_action :authenticate_user!   
-  before_action :set_project, only: [:add_member, :remove_member, :add_task_member, :remove_task_member]
-  before_action :set_task, only: [:add_task_member, :remove_task_member]
+  before_action :set_member, only: [:update, :destroy]
 
-  def add_member
-    @user = User.find(params[:project][:user_ids])
-    unless @project.users.include?(@user)
-      @project.users<<@user
-    end
+  def new
+    @member = Member.new
+    respond_with(@member)
+  end  
+
+  def create
+    @member = Member.new(member_params)
+    @member.save
     redirect_to :back
   end
 
-  def remove_member
-    @user = User.find(params[:user_id])
-    @project.users.delete(@user)
-    @project.tasks.each do |task|
-      @user.tasks.delete(task)
-    end
-
-    redirect_to :back
+  def update
+    @project.update(project_params)
+    respond_with(@project)
   end
 
-  def add_task_member
-    @user = User.find(params[:task][:user_id])
-    unless @user.tasks.include?(@task)
-      @user.tasks << @task
-    end
-    redirect_to :back
-
-  end
-
-  def remove_task_member
-    @user = @task.user
-    @user.tasks.delete(@task)
-    redirect_to :back
-  end
-
+  def destroy
+    @member.destroy
+    redirect_to :back    
+  end  
 
   private
-  def set_project
-    @project = Project.find(params[:project_id])
+
+  def set_member
+    @member = Member.find(params[:id])
   end
 
-  def set_task
-    @task = Task.find(params[:id])
+  def member_params
+    params.require(:member).permit(:project_id, :user_id, :role_id)
   end
 
 end

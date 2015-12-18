@@ -27,8 +27,12 @@ class TasksController < ApplicationController
   def create
     @project = Project.find(params[:project_id])
     @task = Task.new(task_params)
-    @task.save
+
+    @task.transaction do
+    @task.save!
     @project.tasks << @task
+    end
+
     respond_with(@project, @task)
   end
 

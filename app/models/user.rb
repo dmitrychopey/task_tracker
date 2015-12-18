@@ -8,10 +8,11 @@ class User < ActiveRecord::Base
 
   validates :email, length: {maximum: 50}, format: {with: VALID_EMAIL_REGEX}
  
-  has_and_belongs_to_many :projects
-  has_many :tasks
-
-  scope :only_members, -> { joins(:roles).where.not(roles: {name: ["superadmin", "manager"]}) }
+  has_many :members
+  has_many :projects, through: :members  
+  
+  scope :not_members, -> (project_id) { where.not(id: Member.select(:user_id).where(project_id: project_id)) }
+  private
 
   before_validation { self.email = email.downcase if email}
 

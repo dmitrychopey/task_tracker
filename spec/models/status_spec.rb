@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Status, type: :model do
 
   	it "has a valid factory" do
-		expect(FactoryGirl.create(:status)).to be_valid
+		expect(FactoryGirl.build(:status)).to be_valid
 	end
 
 	it "is invalid without a title" do
