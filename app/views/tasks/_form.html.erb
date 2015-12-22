@@ -28,6 +28,10 @@
       <%= f.collection_select(:status_id, Status.all, :id, :title) %>
     </div>
     <div class="field">
+      <%= f.label :started_at %><br>
+      <%= date_select("task", "started_at", start_year: 1995) %>
+    </div>
+    <div class="field">
       <%= f.label :finished_at %><br>
       <%= date_select("task", "finished_at", start_year: 1995) %>
     </div>

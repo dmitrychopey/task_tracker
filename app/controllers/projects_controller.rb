@@ -29,7 +29,7 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     @project.save
-    respond_with(@project)
+    redirect_to projects_path
   end
 
   def update

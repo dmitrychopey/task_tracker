@@ -4,7 +4,7 @@ class TaskMembersController < ApplicationController
   before_action :set_task, only: [:create, :destroy]
   
   def create
-    @member = Member.find_by_user_id(params[:user][:user_id]).first
+    @member = Member.find_by(user_id: params[:user][:user_id])
     unless @member.tasks.include?(@task)
       @member.tasks << @task
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151218115539) do
+ActiveRecord::Schema.define(version: 20151222104759) do
 
   create_table "members", force: :cascade do |t|
     t.integer  "project_id", null: false
@@ -59,8 +59,8 @@ ActiveRecord::Schema.define(version: 20151218115539) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_id"
-    t.date     "finished_at"
-    t.date     "started_at"
+    t.datetime "finished_at"
+    t.datetime "started_at"
     t.integer  "member_id"
   end
 

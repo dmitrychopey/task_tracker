@@ -11,7 +11,7 @@ class StatisticsController < ApplicationController
       @projects_chart[key] = (@today -value).to_i 
     }  
 
-    @members_tasks=(Task.without_weekends.joins(:member).merge Member.only_users).average_time
+    # @members_tasks=(Task.without_weekends.joins(:member).merge Member.only_users).average_time
     
   end
 

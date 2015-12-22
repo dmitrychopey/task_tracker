@@ -11,7 +11,7 @@
       <th>Start date</th>
       <th>End date</th>  
       <th>Spent time</th> 
-      <th>By tasks</th> 
+      <th>Avg. hours per day</th>      
     </tr>
   </thead>
 
@@ -22,8 +22,8 @@
         <td><%= project.description %></td>
         <td><%= project.start_date %></td>
         <td><%= project.end_date %></td>       
-        <td><%= (@today-project.start_date).to_i %></td>   
-        <td><%=link_to "By #{project.name}'s' tasks", by_tasks_path(project) %></td>    
+        <td><%= (@today-project.start_date).to_i %></td>  
+        <td><%= project.tasks.total_without_weekends/project.total_days.to_i%></td>         
       </tr>
     <% end %>
   </tbody>
@@ -33,10 +33,6 @@
 <%= pie_chart(@projects_chart) %>
 
 
-<h1>Statistics by all tasks</h1>
-<br>
 
 
- <%= column_chart(@members_tasks) %>
-
-
+<!-- Task.total_time_without_weekends(2)/project.total_days.to_i  -->

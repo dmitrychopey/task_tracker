@@ -72,6 +72,7 @@
     <th>Description</th>
     <th>Duration</th>
     <th>Status</th>
+    <th>Started at</th>
     <th>Finished at</th>
     <th></th>
     <th></th>
@@ -88,6 +89,7 @@
               <%= task.status.title %>
 
           <% end %>
+        <td><%= task.started_at %></td>
         <td><%= task.finished_at %></td>
         </td>
         <td><%= link_to 'Show', project_task_path(@project, task) %></td>

@@ -8,5 +8,11 @@ class Project < ActiveRecord::Base
 
   def start_date_end_date
       errors.add(:start_date, " : Start date should be less then end date") if start_date > end_date
-    end
+  end
+
+  def total_days
+  	end_date-start_date
+  end
+
+
 end
